@@ -1,0 +1,22 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: always
+    ports:
+    - ${WEBUI_PORT:-3030}:8080
+    volumes:
+    - ${OPEN_WEBUI_DIR:-./data}:/app/backend/data
+    env_file:
+    - .env
+    environment:
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - OPENAI_API_BASE_URL=https://openrouter.ai/api/v1
+    - OPENAI_API_KEY=${OPENROUTER_API_KEY}
+    - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
+    - TZ=Asia/Kuala_Lumpur
+    networks:
+    - pwn20wnd-network
+networks:
+  pwn20wnd-network:
+    external: true

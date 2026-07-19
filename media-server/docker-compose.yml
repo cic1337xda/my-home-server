@@ -1,0 +1,136 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+    - PUID=${PUID:-1000}
+    - PGID=${PGID:-1000}
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - WEBUI_PORT=8080
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - ${CONFIG_DIR}/qbittorrent:/config
+    - ${DATA_DIR}:/data
+    ports:
+    - 8085:8080
+    - 6881:6881
+    - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+    - pwn20wnd-network
+    - default
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+    - PUID=${PUID:-1000}
+    - PGID=${PGID:-1000}
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - ${CONFIG_DIR}/prowlarr:/config
+    ports:
+    - 9696:9696
+    restart: unless-stopped
+    networks:
+    - pwn20wnd-network
+    - default
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+    - PUID=${PUID:-1000}
+    - PGID=${PGID:-1000}
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - ${CONFIG_DIR}/radarr:/config
+    - ${DATA_DIR}:/data
+    ports:
+    - 7878:7878
+    depends_on:
+    - qbittorrent
+    - prowlarr
+    restart: unless-stopped
+    networks:
+    - pwn20wnd-network
+    - default
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+    - PUID=${PUID:-1000}
+    - PGID=${PGID:-1000}
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - ${CONFIG_DIR}/sonarr:/config
+    - ${DATA_DIR}:/data
+    ports:
+    - 8989:8989
+    depends_on:
+    - qbittorrent
+    - prowlarr
+    restart: unless-stopped
+    networks:
+    - pwn20wnd-network
+    - default
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+    - PUID=${PUID:-1000}
+    - PGID=${PGID:-1000}
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - ${CONFIG_DIR}/lidarr:/config
+    - ${DATA_DIR}:/data
+    ports:
+    - 8686:8686
+    depends_on:
+    - qbittorrent
+    - prowlarr
+    restart: unless-stopped
+    networks:
+    - pwn20wnd-network
+    - default
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+    - PUID=${PUID:-1000}
+    - PGID=${PGID:-1000}
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - ${CONFIG_DIR}/bazarr:/config
+    - ${DATA_DIR}:/data
+    ports:
+    - 6767:6767
+    restart: unless-stopped
+    networks:
+    - pwn20wnd-network
+    - default
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+    - PUID=${PUID:-1000}
+    - PGID=${PGID:-1000}
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - ${CONFIG_DIR}/jellyfin:/config
+    - ${DATA_DIR}/media:/data/media
+    ports:
+    - 8096:8096
+    devices:
+    - /dev/dri:/dev/dri
+    restart: unless-stopped
+    networks:
+    - pwn20wnd-network
+    - default
+networks:
+  pwn20wnd-network:
+    external: true

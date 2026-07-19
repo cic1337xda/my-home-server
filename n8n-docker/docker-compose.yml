@@ -1,0 +1,27 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n-automation
+    restart: always
+    ports:
+    - ${N8N_PORT:-5678}:5678
+    env_file:
+    - .env
+    environment:
+    - N8N_BASIC_AUTH_ACTIVE=true
+    - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+    - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - GENERIC_TIMEZONE=${TZ:-Asia/Kuala_Lumpur}
+    - N8N_HOST=localhost
+    - N8N_PORT=5678
+    - WEBHOOK_URL=${N8N_WEBHOOK_URL}
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - ${N8N_DATA_DIR}:/home/node/.n8n
+    networks:
+    - pwn20wnd-network
+    - default
+networks:
+  pwn20wnd-network:
+    external: true

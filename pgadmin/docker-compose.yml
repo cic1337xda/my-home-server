@@ -1,0 +1,19 @@
+services:
+  pgadmin-service:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PG_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PG_PASSWORD}
+      PGADMIN_CONFIG_CHECK_FOR_UPDATES: 'False'
+      TZ: Asia/Kuala_Lumpur
+    ports:
+    - 8099:80
+    volumes:
+    - ${PG_DATA_PATH}:/var/lib/pgadmin
+    networks:
+    - pwn20wnd-network
+networks:
+  pwn20wnd-network:
+    external: true

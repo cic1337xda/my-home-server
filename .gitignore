@@ -1,0 +1,99 @@
+# ==========================================
+# MASTER .gitignore — Home Server Portfolio
+# ==========================================
+
+# ---- SECRETS & CREDENTIALS ----
+**/.env
+**/.env.*
+!**/.env.example
+**/*.key
+**/*.pem
+**/*.cert
+**/*.crt
+**/*.p12
+**/*.pfx
+
+# ---- DATABASES ----
+**/*.sql
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/*.mv.db
+
+# ---- CLIENT PROJECTS (Separate repo/portfolio) ----
+client-projects/
+
+# ---- BACKUP ARCHIVES ----
+backup/
+
+# ---- DOCKER COMPOSE BACKUPS ----
+**/docker-compose.yml.bak
+
+# ---- RUNTIME DATA & CONFIG DIRECTORIES ----
+# AdGuard
+adguard/conf/
+adguard/work/
+
+# CrowdSec
+crowdsec/config/
+crowdsec/data/
+
+# Glance
+glance/config/glance.yml
+
+# Grafana / Prometheus
+graphana/prometheus.yml
+graphana/www/
+
+# Immich (photo backup - large data)
+immich/upload_location/
+immich/db_data/
+
+# Media Server (*arr stack configs & media)
+media-server/config/
+media-server/data/
+
+# n8n
+n8n-docker/data/
+
+# Nextcloud
+nextcloud/www/
+nextcloud/db_data/
+
+# Embedded git repo (synclyr2metadata)
+media-server/synclyr2metadata/
+
+# Nginx Proxy Manager (contains DB, logs, SSL)
+npm/data/
+npm/letsencrypt/
+
+# Open WebUI
+open-webui/data/
+
+# Portainer
+portainer/data/
+
+# Stirling-PDF
+stirling-pdf/logs/
+stirling-pdf/extraConfigs/
+stirling-pdf/trainingData/
+stirling-pdf/customFiles/
+
+# ---- OS & TEMP FILES ----
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*.log
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# ---- IDE / EDITOR ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

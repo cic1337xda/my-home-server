@@ -1,0 +1,94 @@
+services:
+  db:
+    image: mariadb:10.11
+    container_name: nextcloud-db
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    restart: always
+    volumes:
+    - ${NEXTCLOUD_ROOT_DIR:-./stack}/database:/var/lib/mysql
+    env_file:
+    - .env
+    environment:
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    - MYSQL_DATABASE=${MYSQL_DATABASE}
+    - MYSQL_USER=${MYSQL_USER}
+    - TZ=Asia/Kuala_Lumpur
+    networks:
+    - pwn20wnd-network
+    - default
+  redis:
+    image: redis:alpine
+    container_name: nextcloud-redis
+    restart: always
+    networks:
+    - pwn20wnd-network
+    - default
+    environment:
+    - TZ=Asia/Kuala_Lumpur
+  app:
+    image: nextcloud:latest
+    container_name: nextcloud-app
+    restart: always
+    ports:
+    - ${NEXTCLOUD_PORT:-8080}:80
+    volumes:
+    - ${NEXTCLOUD_ROOT_DIR:-./stack}/html:/var/www/html
+    - ${NEXTCLOUD_ROOT_DIR:-./stack}/data:/var/www/html/data
+    env_file:
+    - .env
+    environment:
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    - MYSQL_DATABASE=${MYSQL_DATABASE}
+    - MYSQL_USER=${MYSQL_USER}
+    - MYSQL_HOST=db
+    - REDIS_HOST=redis
+    - OVERWRITEHOST=${NEXTCLOUD_DOMAIN}
+    - OVERWRITEPROTOCOL=https
+    - TZ=Asia/Kuala_Lumpur
+    depends_on:
+    - db
+    - redis
+    networks:
+    - pwn20wnd-network
+    - default
+  cron:
+    image: nextcloud:latest
+    container_name: nextcloud-cron
+    restart: always
+    volumes:
+    - ${NEXTCLOUD_ROOT_DIR:-./stack}/html:/var/www/html
+    - ${NEXTCLOUD_ROOT_DIR:-./stack}/data:/var/www/html/data
+    entrypoint: /cron.sh
+    depends_on:
+    - db
+    - redis
+    networks:
+    - pwn20wnd-network
+    - default
+    environment:
+    - TZ=Asia/Kuala_Lumpur
+  onlyoffice:
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice
+    restart: always
+    ports:
+    - ${ONLYOFFICE_PORT:-8084}:80
+    env_file:
+    - .env
+    environment:
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - JWT_ENABLED=true
+    - JWT_SECRET=${ONLYOFFICE_JWT_SECRET}
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - ${NEXTCLOUD_ROOT_DIR:-./stack}/onlyoffice/data:/var/www/onlyoffice/Data
+    - ${NEXTCLOUD_ROOT_DIR:-./stack}/onlyoffice/logs:/var/log/onlyoffice
+    networks:
+    - pwn20wnd-network
+    - default
+networks:
+  pwn20wnd-network:
+    external: true

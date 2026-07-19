@@ -1,0 +1,23 @@
+services:
+  app:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    env_file:
+    - .env
+    environment:
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - TZ=Asia/Kuala_Lumpur
+    ports:
+    - ${PORT_HTTP:-80}:80
+    - ${PORT_ADMIN:-81}:81
+    - ${PORT_HTTPS:-443}:443
+    volumes:
+    - ${NPM_DATA_DIR:-./data}:/data
+    - ${NPM_LETSENCRYPT_DIR:-./letsencrypt}:/etc/letsencrypt
+    networks:
+    - pwn20wnd-network
+    - default
+networks:
+  pwn20wnd-network:
+    external: true

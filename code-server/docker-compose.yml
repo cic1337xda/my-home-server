@@ -1,0 +1,20 @@
+services:
+  code-server:
+    image: codercom/code-server:latest
+    container_name: code-server
+    user: "1000:1000"
+    networks:
+      - pwn20wnd-network
+    environment:
+      - PASSWORD=${CODE_SERVER_PASSWORD}
+      - TZ=${TARGET_TZ}
+    volumes:
+      - ${HOST_CONFIG_PATH}:/home/coder/.config
+      - ${HOST_PROJECT_PATH}:/home/coder/project
+    ports:
+      - "8090:8080"
+    restart: unless-stopped
+
+networks:
+  pwn20wnd-network:
+    external: true

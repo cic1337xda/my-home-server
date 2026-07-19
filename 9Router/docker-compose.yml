@@ -1,0 +1,29 @@
+services:
+  9router:
+    image: node:20-alpine
+    container_name: 9router
+    restart: unless-stopped
+    # Allocate a pseudo-TTY and keep STDIN open to prevent interactive CLI utilities from exiting
+    tty: true
+    stdin_open: true
+    command: sh -c "npm install -g 9router && 9router"
+    ports:
+      - "20128:20128"
+    environment:
+      - NODE_ENV=production
+      - TZ=Asia/Kuala_Lumpur
+      # Standard environment variable override to suppress auto-browser launch sequences in headless environments
+      - BROWSER=none 
+    volumes:
+      - 9router_data:/root/.config
+    networks:
+      - custom_bridge_net
+
+volumes:
+  9router_data:
+    name: 9router_data_volume
+
+networks:
+  custom_bridge_net:
+    external: true
+    name: pwn20wnd-network

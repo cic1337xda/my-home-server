@@ -1,0 +1,29 @@
+services:
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns:latest
+    container_name: cloudflare-ddns
+    restart: always
+    env_file:
+    - .env
+    environment:
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - API_KEY=${CF_API_KEY}
+    - ZONE=${CF_ZONE}
+    - SUBDOMAIN=${CF_SUBDOMAIN_1}
+    - PROXIED=true
+    - RRTYPE=A
+    - TZ=Asia/Kuala_Lumpur
+  cloudflare-ddns-dot:
+    image: oznu/cloudflare-ddns:latest
+    container_name: cloudflare-ddns-dot
+    restart: always
+    env_file:
+    - .env
+    environment:
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - API_KEY=${CF_API_KEY}
+    - ZONE=${CF_ZONE}
+    - SUBDOMAIN=${CF_SUBDOMAIN_2}
+    - PROXIED=false
+    - RRTYPE=A
+    - TZ=Asia/Kuala_Lumpur

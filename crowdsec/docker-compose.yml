@@ -1,0 +1,23 @@
+services:
+  crowdsec:
+    image: crowdsecurity/crowdsec:latest
+    container_name: crowdsec
+    environment:
+      GID: ${GID:-1000}
+      TZ: Asia/Kuala_Lumpur
+      COLLECTIONS: crowdsecurity/nginx-proxy-manager
+    volumes:
+    - ./config:/etc/crowdsec/
+    - ./data:/var/lib/crowdsec/data/
+    - ${NPM_LOGS_DIR:-/var/log/npm}:/var/log/npm:ro
+    restart: unless-stopped
+    security_opt:
+    - no-new-privileges:true
+    ports:
+    - ${CROWDSEC_LAPI_PORT:-8082}:8080
+    networks:
+    - pwn20wnd-network
+    - default
+networks:
+  pwn20wnd-network:
+    external: true

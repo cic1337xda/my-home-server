@@ -1,0 +1,19 @@
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+    - LOG_LEVEL=info
+    - LOG_HTML=false
+    - CAPTCHA_SOLVER=none
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - TZ=Asia/Kuala_Lumpur
+    ports:
+    - ${FLARESOLVERR_PORT:-8191}:8191
+    restart: always
+    networks:
+    - pwn20wnd-network
+    - default
+networks:
+  pwn20wnd-network:
+    external: true

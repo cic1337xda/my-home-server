@@ -1,0 +1,34 @@
+services:
+  netdata:
+    image: netdata/netdata:latest
+    container_name: netdata
+    hostname: ${HOSTNAME:-pwn20wndserver}
+    pid: host
+    restart: unless-stopped
+    cap_add:
+    - SYS_PTRACE
+    security_opt:
+    - apparmor:unconfined
+    environment:
+    - TZ=${TZ:-Asia/Kuala_Lumpur}
+    - TZ=Asia/Kuala_Lumpur
+    volumes:
+    - netdataconfig:/etc/netdata
+    - netdatalib:/var/lib/netdata
+    - netdatacache:/var/cache/netdata
+    - /etc/passwd:/host/etc/passwd:ro
+    - /etc/group:/host/etc/group:ro
+    - /proc:/host/proc:ro
+    - /sys:/host/sys:ro
+    - /etc/os-release:/host/etc/os-release:ro
+    ports:
+    - ${NETDATA_PORT:-19999}:19999
+    networks:
+    - pwn20wnd-network
+volumes:
+  netdataconfig: null
+  netdatalib: null
+  netdatacache: null
+networks:
+  pwn20wnd-network:
+    external: true

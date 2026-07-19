@@ -1,0 +1,21 @@
+# ==========================================
+# GITHUB IGNORE LIST - SECURITY & PRIVACY
+# ==========================================
+
+# 1. Environment Variables & Tokens
+.env
+token.txt
+renew-cert.sh
+
+# 2. AdGuard Privacy Data (DNS Logs, Sessions, Stats)
+# Do NOT upload this as it contains your entire network's browsing history
+work/
+
+# 3. Sensitive Configurations & SSL Certificates
+# Hides your hashed admin passwords and Let's Encrypt Private Keys
+conf/AdGuardHome.yaml
+conf/certs/
+
+# 4. Backups and Temporary Files
+*.bak
+*.tmp

@@ -74,16 +74,16 @@ A comprehensive, self-hosted Docker infrastructure deployed on a bare-metal lapt
 | [Grafana & Prometheus](graphana/) | Real-time hardware & service metrics |
 | [Netdata](netdata/) | High-resolution host monitoring |
 
-### 🎬 Media Stack (The \*arr Ecosystem)
+### 🎬 Media Stack (The *arr Ecosystem)
 | Service | Description |
 |---------|-------------|
-| qBittorrent | Download client |
-| Prowlarr | Indexer manager |
-| Radarr | Movie automation |
-| Sonarr | TV series automation |
-| Lidarr | Music management |
-| Bazarr | Subtitle management |
-| Jellyfin | Media streaming server |
+| [qBittorrent](media-server/) | Download client |
+| [Prowlarr](media-server/) | Indexer manager |
+| [Radarr](media-server/) | Movie automation |
+| [Sonarr](media-server/) | TV series automation |
+| [Lidarr](media-server/) | Music management |
+| [Bazarr](media-server/) | Subtitle management |
+| [Jellyfin](media-server/) | Media streaming server |
 | [FlareSolverr](flaresolverr/) | Cloudflare bypass proxy |
 
 ### ☁️ Cloud & Productivity
@@ -103,10 +103,10 @@ A comprehensive, self-hosted Docker infrastructure deployed on a bare-metal lapt
 | [Code-Server](code-server/) | VS Code in browser |
 | [pgAdmin](pgadmin/) | PostgreSQL administration |
 
-### 🛠️ Networking
+### 🛠️ AI Proxy Manager
 | Service | Description |
 |---------|-------------|
-| [9Router](9Router/) | Custom router management |
+| [9Router](9Router/) | Custom AI proxy management |
 
 ---
 
